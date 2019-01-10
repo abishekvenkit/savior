@@ -1,8 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+// Landing page
+
 // Dashboard Components
 import dashboard from '../views/dashboard'
+
+// Login + Register
+import register from '../views/register'
+import login from '../views/login'
 
 // Widgets
 import widgets from '../views/widgets'
@@ -29,8 +35,6 @@ import forms from '../views/forms/forms'
 // Sample Pages
 import error404 from '../views/sample-pages/error-404'
 import error500 from '../views/sample-pages/error-500'
-import login from '../views/sample-pages/login'
-import register from '../views/sample-pages/register'
 
 Vue.use(Router)
 

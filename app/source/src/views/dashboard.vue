@@ -9,14 +9,15 @@
                 <i class="mdi mdi-cube text-danger icon-lg"></i>
               </div>
               <div class="float-right">
-                <p class="card-text text-right">Total Revenue</p>
+                <p class="card-text text-right">Total Balance</p>
+                <p></p>
                 <div class="fluid-container">
-                  <h3 class="card-title font-weight-bold text-right mb-0">$65,650</h3>
+                  <h3 class="card-title font-weight-bold text-right mb-0">$1,000</h3>
                 </div>
               </div>
             </div>
             <p class="text-muted mt-3">
-              <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth
+              <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower than EoM target
             </p>
           </div>
         </div>
@@ -361,7 +362,10 @@
 
 <script lang="js">
 export default {
-  name: 'dashboard'
+  name: 'dashboard',
+  props: {
+    userData: Object
+  }
 }
 </script>
 

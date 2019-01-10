@@ -1,25 +1,21 @@
 <template>
-  <div class="login">
-    <h3>Sign In</h3>
+  <div class="sign-up">
+    <h3>Create a new account!</h3>
     <input type="text" placeholder="Email"><br>
     <input type="password" placeholder="Password"><br>
-    <button @click="login">Login</button>
-    <p>Don't have an account ? You can <router-link to="/signup">create one</router-link></p>
+    <button>Sign Up</button>
+    <p>Or go back to  <router-link to="/login">login</router-link></p>
   </div>
 </template>
 
 <script>
-    export default {
-        name: 'login',
-        data() {
-            return {};
-        },
-        methods: {
-            login: function() {
-                this.$router.replace('home'); //WHERE DOES LOGIN BUTTON GO?
-            }
-        }
-    }
+  export default {
+    name: 'signUp',
+    data() {
+      return {}
+    },
+    methods: {}
+  }
 </script>
 
 <style scoped>  /* "scoped" attribute limit the CSS to this component only */
@@ -44,4 +40,4 @@
     text-decoration: underline;
     cursor: pointer;
   }
-</style>
+  </style>

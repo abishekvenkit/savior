@@ -36,6 +36,47 @@ def getAccountId(accountType, customerId):
 			return account["_id"]
 	return ""
 
+@app.route("/transactions", methods=['GET'])
+def transactions():
+	idToken = request.args['idToken']
+	accountType = request.args['accountType']
+
+	#check if  token in valid
+	try:
+		decodedToken = auth.verify_id_token(idToken)
+	except:
+		return "INVALID USER TOKEN"
+	uid = decodedToken['uid']
+
+	accountId = getAccountId(accountType, customerId)
+	if accountId == "":
+		return "ACCOUNT TYPE DOES NOT EXIST"
+
+	#retrieve all purchases
+	url = 'http://api.reimaginebanking.com/accounts/{}/purchases?key={}'.format(accountId, apiKey)
+	r = requests.get(url = url)
+	# extracting data in json format
+	purchaseData = r.json()
+
+	allPurchases = []
+
+	for purchase in purchaseData:
+
+		purchaseObject = {}
+
+		purchaseInfo = parsePurchase(purchase)
+		merchantId = purchaseInfo["merchantId"]
+		merchantInfo = parseMerchant(merchantId)
+
+		purchaseObject["name"] = merchantInfo["name"]
+		purchaseObject["amountSpent"] = purchaseInfo["amountSpent"]
+		purchaseObject["date"] = purchaseInfo["date"]
+		purchaseObject["category"] = merchantInfo["category"]
+
+		allPurchases.append(purchaseObject)
+
+	return (str(allPurchases))
+
 @app.route("/purchases", methods=['GET'])
 def purchases():
 	idToken = request.args['idToken']
@@ -61,13 +102,24 @@ def purchases():
 
 	locationFrequency = {}
 	decodedLatLng = {}
+	allPurchases = []
 
 	for purchase in purchaseData:
+
+		purchaseObject = {}
+
 		purchaseInfo = parsePurchase(purchase)
 		merchantId = purchaseInfo["merchantId"]
 		merchantInfo = parseMerchant(merchantId)
 		lat = merchantInfo["lat"]
 		lng = merchantInfo["lng"]
+
+		purchaseObject["name"] = merchantInfo["name"]
+		purchaseObject["amountSpent"] = purchaseInfo["amountSpent"]
+		purchaseObject["date"] = purchaseInfo["date"]
+		purchaseObject["category"] = merchantInfo["category"]
+
+		allPurchases.append(purchaseObject)
 
 		code = geohash2.encode(lat, lng)
 		code = code[:-8]
@@ -89,7 +141,8 @@ def purchases():
 def parsePurchase(purchase):
 	merchantId = purchase["merchant_id"]
 	amountSpent = purchase["amount"]
-	return {"merchantId": merchantId, "amountSpent": amountSpent}
+	date = purchase["purchase_date"]
+	return {"merchantId": merchantId, "amountSpent": amountSpent, "date": date}
 
 def parseMerchant(merchantId):
 	url = 'http://api.reimaginebanking.com/merchants/{}/?key={}'.format(merchantId, apiKey)

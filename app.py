@@ -7,12 +7,14 @@ import firebase_admin
 from firebase_admin import credentials, auth
 from flask import abort
 from flask import request
+from flask_cors import CORS
 
 import geohash2 
 
 
 #create app (uses bootstrap template)
 app = Flask(__name__)
+CORS(app)
 
 #customerId refers to a specific account
 customerId = '5c33c2c3322fa06b677941ff'

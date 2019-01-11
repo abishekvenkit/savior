@@ -50,9 +50,9 @@ def transactions():
 	# 	return "INVALID USER TOKEN"
 	# uid = decodedToken['uid']
 
-	# accountId = getAccountId(accountType, customerId)
-	# if accountId == "":
-	# 	return "ACCOUNT TYPE DOES NOT EXIST"
+	accountId = getAccountId(accountType, customerId)
+	if accountId == "":
+		return "ACCOUNT TYPE DOES NOT EXIST"
 
 	#retrieve all purchases
 	url = 'http://api.reimaginebanking.com/accounts/{}/purchases?key={}'.format(accountId, apiKey)
@@ -92,9 +92,9 @@ def purchases():
 	# uid = decodedToken['uid']
 
 	# #determine accountId of the correct account
-	# accountId = getAccountId(accountType, customerId)
-	# if accountId == "":
-	# 	return "ACCOUNT TYPE DOES NOT EXIST"
+	accountId = getAccountId(accountType, customerId)
+	if accountId == "":
+		return "ACCOUNT TYPE DOES NOT EXIST"
 
 	#retrieve all purchases
 	url = 'http://api.reimaginebanking.com/accounts/{}/purchases?key={}'.format(accountId, apiKey)

@@ -77,7 +77,7 @@ def transactions():
 
 		allPurchases.append(purchaseObject)
 
-	return (str(allPurchases))
+	return json.dumps(allPurchases)
 
 @app.route("/purchases", methods=['GET'])
 def purchases():

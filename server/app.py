@@ -17,12 +17,15 @@ app = Flask(__name__)
 #customerId refers to a specific account
 customerId = '5c33c2c3322fa06b677941ff'
 apiKey = 'fa0bca11d2dce6398f771fd7ed49ba42'
-geocodeAPIKEY = 'AIzaSyAZl193a7iWy35ZAdhU1bjXj0VE-mqW85o'
-email = 'abishekvenkit@gmail.com'
-
 
 cred = credentials.Certificate("service.json")
 firebase_admin.initialize_app(cred)
+
+# grouponMap = {'Food & Groceries': ['food-and-drink'] ,
+# 'Fun': ['entertainment-and-media', 'beauty-and-spas'],
+#  'Clothing': ['retail', 'mens-clothing-shoes-and-accessories', 'womens-clothing-shoes-and-accessories'], 
+# 'Essentials': ,
+# , 'Electronics': ['electronics'], 'Health':, 'Other':,}
 
 #create routes with respective template files
 
@@ -62,6 +65,7 @@ def purchases():
 	purchaseData = r.json()
 
 	locationFrequency = {}
+	decodedLatLng = {}
 
 	for purchase in purchaseData:
 		purchaseInfo = parsePurchase(purchase)
@@ -71,14 +75,20 @@ def purchases():
 		lng = merchantInfo["lng"]
 
 		code = geohash2.encode(lat, lng)
-		code = code[:-4]
+		code = code[:-8]
+
 		if code in locationFrequency:
 			locationFrequency[code] += 1
+			decodedLatLng[geohash2.decode(code)] += 1
 		else:
 			locationFrequency[code] = 1
+			decodedLatLng[geohash2.decode(code)] = 1
 
-	return str(locationFrequency)
+	out = sorted(decodedLatLng, reverse=True, key=decodedLatLng.get)
+	out = out[0:5]
 
+	parseGroupon(locations)
+	return out
 	#return json.dumps(purchaseData)
 
 def parsePurchase(purchase):
@@ -98,6 +108,12 @@ def parseMerchant(merchantId):
 	merchantInfo = {"name": merchantName, "lat": merchantLatLng["lat"],
 	 "lng": merchantLatLng["lng"], "category": merchantCategory}
 	return merchantInfo
+
+def parseGroupon(locations):
+	for loc in locations:
+		
+	return
+
 
 
 if __name__ == "__main__":

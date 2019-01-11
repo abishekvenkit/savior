@@ -137,7 +137,7 @@ def purchases():
 	locations = out[0:5]
 
 	outputData = parseGroupon(locations)
-	return (str(outputData))
+	return json.dumps(outputData)
 	#return json.dumps(purchaseData)
 
 def parsePurchase(purchase):

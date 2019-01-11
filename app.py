@@ -44,11 +44,11 @@ def purchases():
 	accountType = request.args['accountType']
 
 	#check if  token in valid
-	# try:
-	# 	decodedToken = auth.verify_id_token(idToken)
-	# except:
-	# 	return "INVALID USER TOKEN"
-	# uid = decodedToken['uid']
+	try:
+		decodedToken = auth.verify_id_token(idToken)
+	except:
+		return "INVALID USER TOKEN"
+	uid = decodedToken['uid']
 
 	#determine accountId of the correct account
 	accountId = getAccountId(accountType, customerId)

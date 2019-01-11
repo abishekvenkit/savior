@@ -43,16 +43,16 @@ def transactions():
 	idToken = request.args['idToken']
 	accountType = request.args['accountType']
 
-	#check if  token in valid
-	try:
-		decodedToken = auth.verify_id_token(idToken)
-	except:
-		return "INVALID USER TOKEN"
-	uid = decodedToken['uid']
+	# #check if  token in valid
+	# try:
+	# 	decodedToken = auth.verify_id_token(idToken)
+	# except:
+	# 	return "INVALID USER TOKEN"
+	# uid = decodedToken['uid']
 
-	accountId = getAccountId(accountType, customerId)
-	if accountId == "":
-		return "ACCOUNT TYPE DOES NOT EXIST"
+	# accountId = getAccountId(accountType, customerId)
+	# if accountId == "":
+	# 	return "ACCOUNT TYPE DOES NOT EXIST"
 
 	#retrieve all purchases
 	url = 'http://api.reimaginebanking.com/accounts/{}/purchases?key={}'.format(accountId, apiKey)
@@ -84,17 +84,17 @@ def purchases():
 	idToken = request.args['idToken']
 	accountType = request.args['accountType']
 
-	#check if  token in valid
-	try:
-		decodedToken = auth.verify_id_token(idToken)
-	except:
-		return "INVALID USER TOKEN"
-	uid = decodedToken['uid']
+	# #check if  token in valid
+	# try:
+	# 	decodedToken = auth.verify_id_token(idToken)
+	# except:
+	# 	return "INVALID USER TOKEN"
+	# uid = decodedToken['uid']
 
-	#determine accountId of the correct account
-	accountId = getAccountId(accountType, customerId)
-	if accountId == "":
-		return "ACCOUNT TYPE DOES NOT EXIST"
+	# #determine accountId of the correct account
+	# accountId = getAccountId(accountType, customerId)
+	# if accountId == "":
+	# 	return "ACCOUNT TYPE DOES NOT EXIST"
 
 	#retrieve all purchases
 	url = 'http://api.reimaginebanking.com/accounts/{}/purchases?key={}'.format(accountId, apiKey)

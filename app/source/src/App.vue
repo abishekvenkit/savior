@@ -23,7 +23,6 @@ import AppHeader from '../src/components/partials/AppHeader'
 import AppSidebar from '../src/components/partials/AppSidebar'
 import AppFooter from '../src/components/partials/AppFooter'
 
-
 // setup firebase
 import firebase from 'firebase'
 var config = {
@@ -35,19 +34,6 @@ var config = {
     messagingSenderId: "797865036316" }
 firebase.initializeApp(config)
 
-var data = {test: 'hello'}
-const self = this
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // fetch user data
-    console.log(user)
-    data['email'] = 'aditya@illinois.edu'
-  } else {
-    // No user is signed in.
-    self.$router.push('login')
-  }
-});
-
 export default{
   name: 'app',
   components: {
@@ -55,16 +41,34 @@ export default{
     AppSidebar,
     AppFooter
   },
+  mounted() {
+
+    const self = this
+    
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // fetch user data
+        self.userData['email'] = user.email
+      } else {
+        self.userData['email'] = ''
+        // No user is signed in.
+        self.$router.push('login')
+      }
+    });
+    
+  },
   data() {
-    return {userData: data}
+    return {userData: {
+      email: 'example@example.com'
+    }}
   }
 }
 </script>
 
 <style>
-  @import "../node_modules/mdi/css/materialdesignicons.min.css";
-  @import "../node_modules/flag-icon-css/css/flag-icon.min.css";
-  @import "../node_modules/font-awesome/css/font-awesome.min.css";
+@import "../node_modules/mdi/css/materialdesignicons.min.css";
+@import "../node_modules/flag-icon-css/css/flag-icon.min.css";
+@import "../node_modules/font-awesome/css/font-awesome.min.css";
 </style>
 
 <style lang="scss">

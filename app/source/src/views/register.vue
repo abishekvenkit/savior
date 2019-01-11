@@ -25,7 +25,7 @@
                   There was an error in registering a new account. Please try again.
                 </div>
                 <div class="mt-2 text-center">
-                  <a href="login.html" class="auth-link text-black">Already have an account? <span class="font-weight-medium">Sign in</span></a>
+                  <a @click="login()" class="auth-link text-black">Already have an account? <span class="font-weight-medium">Sign in!</span></a>
                 </div>
               </form>
             </form>
@@ -50,7 +50,7 @@ export default {
     }
   },
   methods: {
-    register () {
+    register: function () {
       // create user with email
       const email = this.email
       const password = this.password
@@ -58,13 +58,19 @@ export default {
       const self = this
       firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
         self.error = false
-        // redirect to home page with login
-        self.$router.push('/')
+        self.firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user) => {
+          console.log(user)
+          self.error = false
+          self.firebase.auth().currentUser.getIdToken(true).then(token => console.log(token))
+          self.$router.push('/')
+          
+        })
       })
       .catch((error) => {
           self.error = true
       })
-    }
+    },
+    login: function() { this.$router.push('/login') }
   }
 }
 </script>
@@ -72,4 +78,8 @@ export default {
 <style lang="sass" scoped>
   #error
     color: red
+  a
+    &:hover
+      text-decoration: underline
+      cursor: pointer
 </style>

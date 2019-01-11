@@ -7,8 +7,8 @@
             <div class="profile-image"> <img src="../../assets/images/faces/face4.jpg" alt="image"/> <span class="online-status online"></span> </div>
             <div class="profile-name">
               <p class="name">{{ username }}</p>
-              <p class="designation">Manager</p>
-              <div class="badge badge-teal mx-auto mt-3">Online</div>
+              <p class="designation"></p>
+              <div class="badge badge-teal mx-auto mt-3"></div>
             </div>
           </div>
         </li>

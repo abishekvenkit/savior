@@ -7,12 +7,16 @@
     </div>
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav class="header-links">
+        <!--
         <b-nav-item href="#"><i class="mdi mdi-image-filter"></i>Gallery</b-nav-item>
         <b-nav-item href="#" active><i class="mdi mdi-email-outline"></i>Inbox</b-nav-item>
         <b-nav-item href="#"><i class="mdi mdi-calendar"></i>Calendar</b-nav-item>
+        -->
       </b-navbar-nav>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
+        <b-nav-item @click="signout()"></i>Logout</b-nav-item>
+        <!--
         <b-nav-item-dropdown right class="preview-list">
           <template slot="button-content">
             <div class="count-indicator">
@@ -72,9 +76,8 @@
               <span class="count">4</span>
             </div>
           </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Signout</b-dropdown-item>
-        </b-nav-item-dropdown>
+          <b-dropdown-item @click="signout()">Signout</b-dropdown-item>
+        </b-nav-item-dropdown>-->
         <b-nav-item href="#"><img class="img-xs rounded-circle" src="../../assets/images/faces/face4.jpg" alt="profile image"></b-nav-item>
       </b-navbar-nav>
     </b-collapse>
@@ -83,7 +86,16 @@
 
 <script lang="js">
 export default {
-  name: 'app-header'
+  name: 'app-header',
+  data: function() {return {firebase: require('firebase')}},
+  methods: {
+    signout() {
+      const self = this
+      self.firebase.auth().signOut().then(() => {
+          self.$router.push('/login')
+      })
+    }
+  }
 }
 </script>
 

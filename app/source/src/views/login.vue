@@ -6,7 +6,7 @@
         <div class="col-lg-6 mx-auto">
           <div class="auth-form-dark text-left p-5">
             <h2>Login</h2>
-            <h4 class="font-weight-light">Hello!</h4>
+            <h4 class="font-weight-light">Hello! Login to get started.</h4>
             <form class="pt-5">
               <form>
                 <div class="form-group">
@@ -21,6 +21,9 @@
                 </div>
                 <div class="mt-5">
                   <a class="btn btn-block btn-warning btn-lg font-weight-medium" @click="login()">Login</a>
+                </div>
+                <div class="mt-2 text-center">
+                  <a @click="register()" class="auth-link text-black">Don't have an account? <span class="font-weight-medium">Sign up!</span></a>
                 </div>
                 <div class="mt-2 text-center" id="error" v-if="error">
                   Your email or password was incorrect. Please try again.
@@ -42,22 +45,28 @@ export default {
   methods: {
     login: function() {
       const self = this
-      this.firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
 
-        this.firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user) => {
-        console.log(user)
-          this.error = false
-          //self.firebase.auth().currentUser.getIdToken(true).then(token => console.log(token))
+        self.firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user) => {
+          console.log(user)
+          self.error = false
+          self.firebase.auth().currentUser.getIdToken(true).then(token => console.log(token))
+          self.$router.push('/')
           
         })
         .catch((error) => {
-          this.error = true
+          self.error = true
           console.log(error)
         })
-      }).catch(error => console.log(error))
+    },
+    register: function() { this.$router.push('/register') }
 
-      
-    }
   }
 }
 </script>
+
+<style lang="sass" scoped>
+a
+    &:hover
+      text-decoration: underline
+      cursor: pointer
+</style>
